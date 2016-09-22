@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+
 @Component({
-  selector: 'my-app',
-	template: '<h1>Hello, world!</h1>'
+  selector: 'sopra-steria',
+  template: '<h1>Hello, {{title}}!</h1>'
 })
 export class AppComponent {
-  title = 'Tour of Heroes';
+  title = 'Online';
 }

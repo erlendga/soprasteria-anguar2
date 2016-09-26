@@ -4,7 +4,7 @@ import { FormsModule }    from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
 import { AppComponent }   from './app.component';
-import { WeatherService } from './weather.service';
+import { CourseService } from './course.service';
 
 @NgModule({
   imports: [
@@ -16,7 +16,7 @@ import { WeatherService } from './weather.service';
     AppComponent,
   ],
   providers: [
-  	WeatherService,
+  	CourseService,
   ],
   bootstrap: [ AppComponent ]
 })

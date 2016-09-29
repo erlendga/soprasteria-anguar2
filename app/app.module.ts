@@ -4,16 +4,24 @@ import { FormsModule }    from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
 import { AppComponent }   from './app.component';
+import { StudentComponent } from './student.component';
+import { CourseComponent } from './course.component';
+
 import { CourseService } from './course.service';
+
+import { routing } from './app.routing';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    routing
   ],
   declarations: [
     AppComponent,
+    StudentComponent,
+    CourseComponent,
   ],
   providers: [
   	CourseService,

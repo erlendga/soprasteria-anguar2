@@ -6,14 +6,14 @@ import { Course } from './course';
 
 @Injectable()
 export class CourseService{
-	private courseApiUrl: string = "http://www.ime.ntnu.no/api/course/TDT4110";
+	private courseApiUrl: string = "http://www.ime.ntnu.no/api/course/";
 	private courseData: Observable<string[]>;
 
 	constructor(private http: Http) {}
 
-	getCourse(): Observable<Course> {
+	getCourse(courseCode:string): Observable<Course> {
 		return this.http
-			.get(this.courseApiUrl)
+			.get(this.courseApiUrl + courseCode)
 			.map((response: Response) => response.json() as Course);
 	}
 }

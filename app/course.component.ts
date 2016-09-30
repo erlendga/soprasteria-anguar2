@@ -39,7 +39,7 @@ import 'rxjs/Rx';
             </div>
         </div>
         <div class="col-md-5">
-            <h3>Påmeldingsliste</h3>
+            <h3>Påmeldte kurs</h3>
             <ul>
                 <li *ngFor="let course of courses">
                     {{course}}

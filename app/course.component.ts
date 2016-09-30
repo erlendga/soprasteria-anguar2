@@ -38,9 +38,8 @@ import 'rxjs/Rx';
                 </div>
             </div>
         </div>
-        <div class="col-md-5" *ngIf='courses && studentName'>
-            <h3>Påmeldingsliste for {{studentName}}</h3>
-            <h5>Påmeldte kurs: </h5>
+        <div class="col-md-5">
+            <h3>Påmeldingsliste</h3>
             <ul>
                 <li *ngFor="let course of courses">
                     {{course}}
@@ -57,24 +56,36 @@ export class CourseComponent {
 
 	constructor(private courseService: CourseService){ }
 
-    courses: string[] = [];
-    studentName: string;
+    courses: string[] = localStorage.getItem("courses") ? JSON.parse(localStorage.getItem("courses")) : [];
 
 	getCourse(courseCode)
 	{
         //console.log(StudentComponent);
 		if(courseCode.length > 0)
 		{
-			this.courseService.getCourse(courseCode).subscribe(result => this.result = result as Course);
+			this.courseService.getCourse(courseCode).subscribe(result => this.result = result);
 		}
 	}
 
     getStudentAndCourseValue(courseValue, courseName)
     {
-        let student = JSON.parse(localStorage.getItem("person"));
-        let studentName = student.name;
-        this.studentName = studentName;
-        let courseCodeAndValue = courseValue +" - "+courseName
-        this.courses.push(courseCodeAndValue);
+        let courseNameAndDescription = courseValue + " - " + courseName;
+        let isInArray: boolean = false;
+        for(let course in this.courses)
+        {
+            if(this.courses.indexOf(courseNameAndDescription) > -1)
+            {
+                isInArray = true;
+            }
+        }
+        if(isInArray == false)
+        {
+            this.courses.push(courseNameAndDescription);
+        }
+        
+        console.log(this.courses);
+        localStorage.clear();
+        localStorage.setItem("courses", JSON.stringify(this.courses));
+
     }
 }

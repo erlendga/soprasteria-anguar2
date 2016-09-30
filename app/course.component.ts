@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CourseService } from './course.service';
 import { Course } from './course';
+import { StudentComponent } from './student.component';
 
 import 'rxjs/Rx';
 
@@ -32,15 +33,18 @@ import 'rxjs/Rx';
                             <li>Eksamensdato: {{result.course.assessment[0].date}} </li>
                         </ul>
                         <br/>
-                        <button class="btn btn-primary" type="button" >Meld meg på!</button>
+                        <button class="btn btn-primary" type="button" (click)="getStudentAndCourseValue(courseCode.value, result.course.name)">Meld meg på!</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
-            <h3>Påmeldingsliste</h3>
+        <div class="col-md-5" *ngIf='courses && studentName'>
+            <h3>Påmeldingsliste for {{studentName}}</h3>
+            <h5>Påmeldte kurs: </h5>
             <ul>
-                
+                <li *ngFor="let course of courses">
+                    {{course}}
+                </li>
             </ul>
         </div>
     </div>
@@ -53,11 +57,24 @@ export class CourseComponent {
 
 	constructor(private courseService: CourseService){ }
 
+    courses: string[] = [];
+    studentName: string;
+
 	getCourse(courseCode)
 	{
+        //console.log(StudentComponent);
 		if(courseCode.length > 0)
 		{
 			this.courseService.getCourse(courseCode).subscribe(result => this.result = result as Course);
 		}
 	}
+
+    getStudentAndCourseValue(courseValue, courseName)
+    {
+        let student = JSON.parse(localStorage.getItem("person"));
+        let studentName = student.name;
+        this.studentName = studentName;
+        let courseCodeAndValue = courseValue +" - "+courseName
+        this.courses.push(courseCodeAndValue);
+    }
 }

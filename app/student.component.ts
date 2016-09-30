@@ -20,16 +20,15 @@ export class Student
 			</div>
 			<div class="col-md-4">
 				<label>Navn: </label>
-				<input class="form-control" [(ngModel)]="student.name" placeholder="navn">
+				<input class="form-control" [(ngModel)]="student.name" (keyup)="test(student)" placeholder="navn">
 			</div>
 		</div>
 		<br>
 	</div>
-	
 
 </div>`
-  
 })
+
 
 export class StudentComponent
 {
@@ -40,5 +39,9 @@ export class StudentComponent
 		id: 1,
 		name: "Ola"
 	}
+
+	test(student){
+		localStorage.setItem("person", JSON.stringify(student));
+	} 
 }
 

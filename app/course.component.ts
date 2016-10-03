@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HostBinding, trigger, transition, animate, style, state } from '@angular/core';
 import { CourseService } from './course.service';
 import { Course } from './course';
 import { StudentComponent } from './student.component';
@@ -8,6 +9,12 @@ import 'rxjs/Rx';
 @Component({
     selector: 'my-course',
     template:`
+    <style>
+        .list-group-item:nth-child(odd)
+        {
+            background-color: #E6F7FC;
+        }
+    </style>
     <div class="container">
         <div class="jumbotron col-md-7">
             <div class="row">
@@ -40,18 +47,54 @@ import 'rxjs/Rx';
         </div>
         <div class="col-md-5">
             <h3>Påmeldte kurs</h3>
-            <ul>
-                <li *ngFor="let course of courses">
+            <ul class="list-group">
+                <li *ngFor="let course of courses" class="list-group-item">
                     {{course}}
                 </li>
             </ul>
         </div>
     </div>
     `,
-    providers: [CourseService]
+    providers: [CourseService],
+    animations: [
+       trigger('routeAnimation', [
+           state('*',
+               style({
+                   opacity: 1,
+                   transform: 'translateX(0)'
+               })
+           ),
+           transition('void => *', [
+               style({
+                   opacity: 0,
+                   transform: 'translateY(-100%)'
+               }),
+               animate('0.5s ease-in')
+           ]),
+           transition('* => void', [
+               animate('0.5s ease-out', style({
+                   opacity: 0,
+                    transform: 'translateY(100%)'
+               }))
+           ])
+       ])
+   ]
 })
 
 export class CourseComponent {
+
+    @HostBinding('@routeAnimation') get routeAnimation() {
+		return true;
+	}
+
+	@HostBinding('style.display') get display() {
+		return 'block';
+	}
+
+	@HostBinding('style.position') get position() {
+		return 'relative';
+	}
+
     result: Course;
 
 	constructor(private courseService: CourseService){ }
@@ -82,8 +125,12 @@ export class CourseComponent {
         {
             this.courses.push(courseNameAndDescription);
         }
+        else
+        {
+            alert("Du har allerede meldt deg på dette kurset");
+        }
         
-        console.log(this.courses);
+        //console.log(this.courses);
         localStorage.clear();
         localStorage.setItem("courses", JSON.stringify(this.courses));
 

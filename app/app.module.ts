@@ -6,6 +6,7 @@ import { HttpModule }    from '@angular/http';
 import { AppComponent }   from './app.component';
 import { StudentComponent } from './student.component';
 import { CourseComponent } from './course.component';
+import {CourseDetailComponent} from './course-detail.component';
 
 import { CourseService } from './course.service';
 
@@ -22,6 +23,7 @@ import { routing } from './app.routing';
     AppComponent,
     StudentComponent,
     CourseComponent,
+    CourseDetailComponent,
   ],
   providers: [
   	CourseService,

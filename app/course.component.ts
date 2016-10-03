@@ -3,6 +3,7 @@ import { HostBinding, trigger, transition, animate, style, state } from '@angula
 import { CourseService } from './course.service';
 import { Course } from './course';
 import { StudentComponent } from './student.component';
+import { Router } from '@angular/router';
 
 import 'rxjs/Rx';
 
@@ -42,7 +43,7 @@ import 'rxjs/Rx';
         <div class="col-md-5">
             <h3>Påmeldte kurs</h3>
             <ul class="list-group">
-                <li *ngFor="let course of courses" class="list-group-item">
+                <li *ngFor="let course of courses" class="list-group-item pointer" (click)="gotoCourseDetail(course)">
                     {{course}}
                 </li>
             </ul>
@@ -54,6 +55,10 @@ import 'rxjs/Rx';
         .list-group-item:nth-child(odd)
         {
             background-color: #E6F7FC;
+        }
+        .pointer
+        {
+            cursor: pointer;
         }
     `],
     animations: [
@@ -101,7 +106,7 @@ export class CourseComponent {
 
     result: Course;
 
-    constructor(private courseService: CourseService) { }
+    constructor(private courseService: CourseService, private router: Router) { }
 
     courses: string[] = localStorage.getItem("courses") ? JSON.parse(localStorage.getItem("courses")) : [];
 
@@ -131,5 +136,10 @@ export class CourseComponent {
         localStorage.clear();
         localStorage.setItem("courses", JSON.stringify(this.courses));
 
+    }
+
+    gotoCourseDetail(course) {
+        var id = course.split(" ")[0];
+        this.router.navigate(['/course', id]);
     }
 }

@@ -19,7 +19,9 @@ import { CourseService } from './course.service';
                     <li class="list-group-item">Studienivå: {{result.course.studyLevelName}}</li>
                     <li class="list-group-item">Undervisningsspråk: {{result.course.educationLanguage[0].name}}</li>
                     <li class="list-group-item">Vurderingsform: {{result.course.assessment[0].assessmentFormDescription}}</li>
+                    <li class="list-group-item">Undervises: {{result.course.educationTerm[0].startTerm}} - {{result.course.educationTerm[0].year}}</li>
                     <li class="list-group-item">Eksamensdato: {{result.course.assessment[0].date}}</li>
+                    
                 </ul>
             </div>
         </div>

@@ -8,13 +8,7 @@ import 'rxjs/Rx';
 
 @Component({
     selector: 'my-course',
-    template:`
-    <style>
-        .list-group-item:nth-child(odd)
-        {
-            background-color: #E6F7FC;
-        }
-    </style>
+    template: `
     <div class="container">
         <div class="jumbotron col-md-7">
             <div class="row">
@@ -56,80 +50,83 @@ import 'rxjs/Rx';
     </div>
     `,
     providers: [CourseService],
+    styles: [`
+        .list-group-item:nth-child(odd)
+        {
+            background-color: #E6F7FC;
+        }
+    `],
     animations: [
-       trigger('routeAnimation', [
-           state('*',
-               style({
-                   opacity: 1,
-                   transform: 'translateX(0)'
-               })
-           ),
-           transition('void => *', [
-               style({
-                   opacity: 0,
-                   transform: 'translateY(-100%)'
-               }),
-               animate('0.5s ease-in')
-           ]),
-           transition('* => void', [
-               animate('0.5s ease-out', style({
-                   opacity: 0,
+        trigger('routeAnimation', [
+            state('*',
+                style({
+                    opacity: 1,
+                    transform: 'translateX(0)'
+                })
+            ),
+            transition('void => *', [
+                style({
+                    opacity: 0,
+                    transform: 'translateY(-100%)'
+                }),
+                animate('0.5s ease-in')
+            ]),
+            transition('* => void', [
+                animate('0.5s ease-out', style({
+                    opacity: 0,
                     transform: 'translateY(100%)'
-               }))
-           ])
-       ])
-   ]
+                }))
+            ])
+        ])
+    ]
 })
 
 export class CourseComponent {
 
     @HostBinding('@routeAnimation') get routeAnimation() {
-		return true;
-	}
+        return true;
+    }
 
-	@HostBinding('style.display') get display() {
-		return 'block';
-	}
+    @HostBinding('style.display') get display() {
+        return 'block';
+    }
 
-	@HostBinding('style.position') get position() {
-		return 'relative';
+    @HostBinding('style.position') get position() {
+        return 'absolute';
+    }
+
+    @HostBinding('style.width') get width() {
+		return '100%';
 	}
 
     result: Course;
 
-	constructor(private courseService: CourseService){ }
+    constructor(private courseService: CourseService) { }
 
     courses: string[] = localStorage.getItem("courses") ? JSON.parse(localStorage.getItem("courses")) : [];
 
-	getCourse(courseCode)
-	{
+    getCourse(courseCode) {
         //console.log(StudentComponent);
-		if(courseCode.length > 0)
-		{
-			this.courseService.getCourse(courseCode).subscribe(result => this.result = result);
-		}
-	}
+        if (courseCode.length > 0) {
+            this.courseService.getCourse(courseCode).subscribe(result => this.result = result);
+        }
+    }
 
-    getStudentAndCourseValue(courseValue, courseName)
-    {
+    getStudentAndCourseValue(courseValue, courseName) {
         let courseNameAndDescription = courseValue + " - " + courseName;
         let isInArray: boolean = false;
-        for(let course in this.courses)
-        {
-            if(this.courses.indexOf(courseNameAndDescription) > -1)
-            {
+        for (let course in this.courses) {
+            if (this.courses.indexOf(courseNameAndDescription) > -1) {
                 isInArray = true;
             }
         }
-        if(isInArray == false)
-        {
+        if (isInArray == false) {
             this.courses.push(courseNameAndDescription);
         }
-        else
-        {
+        else {
             alert("Du har allerede meldt deg på dette kurset");
         }
-        
+
         //console.log(this.courses);
         localStorage.clear();
         localStorage.setItem("courses", JSON.stringify(this.courses));

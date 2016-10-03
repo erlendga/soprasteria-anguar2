@@ -65,7 +65,11 @@ export class StudentComponent
 	}
 
 	@HostBinding('style.position') get position() {
-		return 'relative';
+		return 'absolute';
+	}
+
+	@HostBinding('style.width') get width() {
+		return '100%';
 	}
 
 	title = "Online";

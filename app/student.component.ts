@@ -21,7 +21,7 @@ export class Student
 			</div>
 			<div class="col-md-4">
 				<label>Navn: </label>
-				<input class="form-control" [(ngModel)]="student.name" (keyup)="saveStudent(student)" placeholder="navn">
+				<input class="form-control" [(ngModel)]="student.name" placeholder="navn">
 			</div>
 		</div>
 		<br>
@@ -52,8 +52,6 @@ animations: [
        ])
    ]
 })
-
-
 export class StudentComponent
 {
 	@HostBinding('@routeAnimation') get routeAnimation() {
@@ -79,11 +77,5 @@ export class StudentComponent
 		id: 1,
 		name: "Ola"
 	}
-
-	saveStudent(student){
-		localStorage.setItem("person", JSON.stringify(student));
-	} 
-
-	
 }
 

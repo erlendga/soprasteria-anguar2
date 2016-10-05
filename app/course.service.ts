@@ -7,7 +7,6 @@ import { Course } from './course';
 @Injectable()
 export class CourseService{
 	private courseApiUrl: string = "http://www.ime.ntnu.no/api/course/";
-	private courseData: Observable<string[]>;
 
 	constructor(private http: Http) {}
 

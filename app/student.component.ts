@@ -10,7 +10,7 @@ export class Student
 
 @Component({
   selector: 'my-student',
-  template: `
+  template: ` 
   <div class='container'>
 	<div class="jumbotron">
 		<h1>Hello, {{title}}!</h1>
